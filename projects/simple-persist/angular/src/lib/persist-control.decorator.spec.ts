@@ -2,17 +2,17 @@ import { PersistControl } from './persist-control.decorator';
 import { FormControl, FormGroup } from '@angular/forms';
 
 // https://github.com/jestjs/jest/issues/6798#issuecomment-440988627
-// const localStorageGetItemSpy = jest.spyOn(window.localStorage['__proto__'], 'getItem');
-// const localStorageSetItemSpy = jest.spyOn(window.localStorage['__proto__'], 'setItem');
-// const localStorageRemoveItemSpy = jest.spyOn(window.localStorage['__proto__'], 'removeItem');
+const localStorageGetItemSpy = jest.spyOn(window.localStorage['__proto__'], 'getItem');
+const localStorageSetItemSpy = jest.spyOn(window.localStorage['__proto__'], 'setItem');
+const localStorageRemoveItemSpy = jest.spyOn(window.localStorage['__proto__'], 'removeItem');
 
 class TestBed {
   @PersistControl() public foo: any;
 }
 
-// class EarlyTestBed {
-//   @PersistControl() public foo = new BehaviorSubject(undefined);
-// }
+class EarlyTestBed {
+  @PersistControl() public foo = new FormControl();
+}
 
 describe('@PersistControl()', () => {
   let testBed: TestBed;
@@ -32,52 +32,52 @@ describe('@PersistControl()', () => {
     expect(() => { testBed.foo = new FormGroup({}); }).not.toThrow(TypeError);
   });
 
-  // it('should load initial value for Subject', (done) => {
-  //   localStorageGetItemSpy.mockReturnValue('"bar"');
-  //   const subject = new Subject();
-  //   subject.subscribe((value) => {
-  //     expect(value).toBe('bar');
-  //     done();
-  //   });
-  //   testBed.foo = subject;
-  //   expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
-  //   expect(localStorageGetItemSpy).toHaveBeenCalledWith('foo');
-  // });
+  it('should load initial value for FormControl', () => {
+    localStorageGetItemSpy.mockReturnValue('"bar"');
+    testBed.foo = new FormControl();
+    expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
+    expect(localStorageGetItemSpy).toHaveBeenCalledWith('foo');
+    expect(testBed.foo.value).toBe('bar');
+  });
 
-  // it('should load initial value for empty BehaviorSubject', () => {
-  //   localStorageGetItemSpy.mockReturnValue('"bar"');
-  //   testBed.foo = new BehaviorSubject(undefined);
-  //   expect(localStorageSetItemSpy).toHaveBeenCalledWith('foo', '"bar"');
-  //   expect((testBed.foo as BehaviorSubject<any>).value).toBe('bar');
-  // });
+  it('should load initial value for FormGroup', () => {
+    localStorageGetItemSpy.mockReturnValue('{ "a": "bar", "b": "baz" }');
+    testBed.foo = new FormGroup({
+      a: new FormControl(),
+      b: new FormControl(),
+    });
+    expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
+    expect(localStorageGetItemSpy).toHaveBeenCalledWith('foo');
+    expect(testBed.foo.value).toStrictEqual({ a: 'bar', b: 'baz' });
+  });
 
-  // it('should load initial value for empty BehaviorSubject set early', () => {
-  //   localStorageGetItemSpy.mockReturnValue('"bar"');
-  //   const earlyTestBed = new EarlyTestBed();
-  //   expect(localStorageGetItemSpy).toHaveBeenCalledWith('foo');
-  //   expect(localStorageRemoveItemSpy).not.toHaveBeenCalled();
-  //   expect((earlyTestBed.foo as BehaviorSubject<any>).value).toBe('bar');
-  // });
+  it('should load initial value for empty FormControl set early', () => {
+    localStorageGetItemSpy.mockReturnValue('"bar"');
+    const earlyTestBed = new EarlyTestBed();
+    expect(localStorageGetItemSpy).toHaveBeenCalledWith('foo');
+    expect(localStorageRemoveItemSpy).not.toHaveBeenCalled();
+    expect(earlyTestBed.foo.value).toBe('bar');
+  });
 
-  // it('should set initial value for non-empty BehaviorSubject', () => {
-  //   testBed.foo = new BehaviorSubject('bar');
-  //   testBed.foo?.next(undefined);
-  //   expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
-  //   expect((testBed.foo as BehaviorSubject<any>).value).toBeUndefined();
-  // });
+  it('should set initial value for non-empty BehaviorSubject', () => {
+    testBed.foo = new FormControl('bar');
+    testBed.foo.value = undefined;
+    expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
+    expect(testBed.foo.value).toBeUndefined();
+  });
 
-  // it('should persist value', () => {
-  //   localStorageGetItemSpy.mockReturnValue('"bar"');
-  //   testBed.foo = new BehaviorSubject('bar');
-  //   expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
-  //   expect(localStorageSetItemSpy).toHaveBeenCalledWith('foo', '"bar"');
-  //   expect((testBed.foo as BehaviorSubject<any>).value).toBe('bar');
-  // });
+  it('should persist value', () => {
+    localStorageGetItemSpy.mockReturnValue(undefined);
+    testBed.foo = new FormControl('bar');
+    expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith('foo', '"bar"');
+    expect(testBed.foo.value).toBe('bar');
+  });
 
-  // it('should remove key from storage if value is undefined', () => {
-  //   testBed.foo = new BehaviorSubject('bar');
-  //   testBed.foo?.next(undefined);
-  //   expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
-  //   expect((testBed.foo as BehaviorSubject<any>).value).toBeUndefined();
-  // });
+  it('should remove key from storage if value is undefined', () => {
+    testBed.foo = new FormControl('bar');
+    testBed.foo.value = undefined;
+    expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('foo');
+    expect(testBed.foo.value).toBeUndefined();
+  });
 });
