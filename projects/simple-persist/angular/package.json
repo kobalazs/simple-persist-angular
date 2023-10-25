@@ -1,6 +1,33 @@
 {
   "name": "@simple-persist/angular",
   "version": "0.0.1",
+  "keywords": [
+    "persist",
+    "storage",
+    "decorator",
+    "declarative",
+    "angular",
+    "forms"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kobalazs/simple-persist-angular.git"
+  },
+  "author": "Balazs Kovacs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kobalazs/simple-persist-angular/issues"
+  },
+  "homepage": "https://github.com/kobalazs/simple-persist-angular#readme",
   "peerDependencies": {
     "@angular/common": "^14.2.0",
     "@angular/core": "^14.2.0",
