@@ -1,7 +1,5 @@
 /*
- * Public API Surface of angular
+ * Public API Surface
  */
 
-export * from './lib/angular.service';
-export * from './lib/angular.component';
-export * from './lib/angular.module';
+export * from './lib/persist-control.decorator';
