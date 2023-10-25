@@ -1,18 +1,19 @@
+import { BehaviorSubject } from 'rxjs';
 import { PersistControl } from './persist-control.decorator';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 // https://github.com/jestjs/jest/issues/6798#issuecomment-440988627
-const localStorageGetItemSpy = jest.spyOn(window.localStorage.__proto__, 'getItem');
-const localStorageSetItemSpy = jest.spyOn(window.localStorage.__proto__, 'setItem');
-const localStorageRemoveItemSpy = jest.spyOn(window.localStorage.__proto__, 'removeItem');
+const localStorageGetItemSpy = jest.spyOn(window.localStorage['__proto__'], 'getItem');
+const localStorageSetItemSpy = jest.spyOn(window.localStorage['__proto__'], 'setItem');
+const localStorageRemoveItemSpy = jest.spyOn(window.localStorage['__proto__'], 'removeItem');
 
 class TestBed {
   @PersistControl() public foo: any;
 }
 
-// class EarlyTestBed {
-//   @PersistControl() public foo = new BehaviorSubject(undefined);
-// }
+class EarlyTestBed {
+  @PersistControl() public foo = new BehaviorSubject(undefined);
+}
 
 describe('@PersistControl()', () => {
   let testBed: TestBed;
@@ -26,10 +27,10 @@ describe('@PersistControl()', () => {
   });
 
   fit('should handle invalid types', () => {
-    // expect(() => { (testBed.foo as any) = 'bar'; }).toThrow(TypeError);
-    // expect(() => { (testBed.foo as any) = {}; }).toThrow(TypeError);
-    // expect(() => { testBed.foo = new FormControl(); }).not.toThrow(TypeError);
-    // expect(() => { testBed.foo = new FormGroup({}); }).not.toThrow(TypeError);
+    expect(() => { (testBed.foo as any) = 'bar'; }).toThrow(TypeError);
+    expect(() => { (testBed.foo as any) = {}; }).toThrow(TypeError);
+    expect(() => { testBed.foo = new FormControl(); }).not.toThrow(TypeError);
+    expect(() => { testBed.foo = new FormGroup({}); }).not.toThrow(TypeError);
   });
 
   // it('should load initial value for Subject', (done) => {
