@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build @simple-persist/angular",
+    "build": "npm i --path projects/simple-persist/angular/ && ng build @simple-persist/angular",
+    "publish": "cd ./dist/simple-persist/angular/ && npm publish && cd ../../../",
     "watch": "ng build --watch --configuration development",
     "test": "jest --verbose",
     "test:coverage": "jest --coverage",
@@ -22,6 +23,7 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@simple-persist/angular": "file:projects/simple-persist/angular",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
