@@ -1,24 +1,39 @@
-# Angular
+# SimplePersist Angular
+[SimplePersist](https://www.npmjs.com/package/@simple-persist/core) decorator to handle Angular forms
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+#### Table of Contents
+* [Installation](#installation)
+* [Quick start](#quick-start)
+* [Read more](#read-more)
+* [Collaboration](#collaboration)
 
-## Code scaffolding
+## Installation
+```bash
+npm install @simple-persist/angular
+```
 
-Run `ng generate component component-name --project angular` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project angular`.
-> Note: Don't forget to add `--project angular` or else it will be added to the default project in your `angular.json` file. 
+## Quick start
+Add `@PersistControl()` decorator to a FormGroup or FormControl class property:
+```ts
+import { PersistSubject } from '@simple-persist/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
-## Build
+class Foo {
+  @PersistControl() public bar?: FormGroup;
+  // or
+  @PersistControl() public baz?: FormControl;
+}
+```
+> **Note:**  All configuration options of `@Persist()` from
+> [@simple-persist/core](https://www.npmjs.com/package/@simple-persist/core)
+> are available for `@PersistControl()` as well.
+> Use the same syntax to define custom keygens, middlewares or storage for your decorator!
 
-Run `ng build angular` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Read more
+For more information (caveats, advanced use, other extensions) see [@simple-persist/core](https://www.npmjs.com/package/@simple-persist/core).
 
-## Publishing
+Check out my article about the reasoning behind this package: [Do we need state management in Angular?](https://medium.com/@kobalazs/do-we-need-state-management-in-angular-baf612823b16)
 
-After building your library with `ng build angular`, go to the dist folder `cd dist/angular` and run `npm publish`.
+## Collaboration
 
-## Running unit tests
-
-Run `ng test angular` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Feel free to [suggest features](https://github.com/kobalazs), [open issues](https://github.com/kobalazs/simple-persist-rxjs/issues), or [contribute](https://github.com/kobalazs/simple-persist-rxjs/pulls)! Also let me know about your extensions, so I can link them in this document.
