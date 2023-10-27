@@ -1,6 +1,6 @@
 {
   "name": "@simple-persist/angular",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "keywords": [
     "persist",
     "storage",
@@ -26,9 +26,9 @@
   },
   "homepage": "https://github.com/kobalazs/simple-persist-angular#readme",
   "peerDependencies": {
-    "@angular/common": "^14.2.0",
-    "@angular/core": "^14.2.0",
-    "@angular/forms": "^14.2.0",
+    "@angular/common": "^14.2.0 || ^15.0.0 || ^16.0.0",
+    "@angular/core": "^14.2.0 || ^15.0.0 || ^16.0.0",
+    "@angular/forms": "^14.2.0 || ^15.0.0 || ^16.0.0",
     "@simple-persist/core": "^0.1.4",
     "rxjs": "^7.0.0"
   },
