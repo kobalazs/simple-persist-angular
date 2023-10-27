@@ -15,8 +15,8 @@ npm install @simple-persist/angular
 ## Quick start
 Add `@PersistControl()` decorator to a FormGroup or FormControl class property:
 ```ts
-import { PersistSubject } from '@simple-persist/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { PersistControl } from '@simple-persist/angular';
+import { FormControl, FormGroup } from '@angular/forms';
 
 class Foo {
   @PersistControl() public bar?: FormGroup;
@@ -36,4 +36,4 @@ Check out my article about the reasoning behind this package: [Do we need state 
 
 ## Collaboration
 
-Feel free to [suggest features](https://github.com/kobalazs), [open issues](https://github.com/kobalazs/simple-persist-rxjs/issues), or [contribute](https://github.com/kobalazs/simple-persist-rxjs/pulls)! Also let me know about your extensions, so I can link them in this document.
+Feel free to [suggest features](https://github.com/kobalazs), [open issues](https://github.com/kobalazs/simple-persist-angular/issues), or [contribute](https://github.com/kobalazs/simple-persist-angular/pulls)! Also let me know about your extensions, so I can link them in this document.
